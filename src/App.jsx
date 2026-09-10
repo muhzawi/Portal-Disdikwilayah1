@@ -289,9 +289,7 @@ function Landing() {
             </div>
           </div>
         </section>
-        <section className="trust-strip">
-          
-        </section>
+        <section className="trust-strip"></section>
         <section className="steps section container" id="cara-kerja">
           <div className="section-heading centered">
             <span className="eyebrow">Cara kerja</span>

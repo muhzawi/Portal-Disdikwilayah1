@@ -349,6 +349,7 @@ em {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 60px;
+ 
 }
 .step {
   padding-right: 25px;

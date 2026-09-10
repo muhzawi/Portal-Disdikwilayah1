@@ -82,3 +82,51 @@ npm run preview
 
 Setelah perintah `preview` berjalan, buka alamat lokal yang ditampilkan pada
 terminal.
+
+## Deploy ke Vercel
+
+Proyek ini dapat di-deploy sebagai static frontend Vite. Karena aplikasi
+menggunakan `BrowserRouter`, file `vercel.json` di folder ini mengarahkan
+semua URL aplikasi ke `index.html` agar route tetap bekerja setelah halaman
+di-refresh.
+
+### Deploy melalui dashboard Vercel
+
+1. Pastikan proyek sudah di-push ke GitHub, GitLab, atau Bitbucket.
+2. Buka [vercel.com/new](https://vercel.com/new), lalu import repository proyek.
+3. Pada **Root Directory**, pilih `frontend` (bukan folder root repository).
+4. Gunakan pengaturan berikut:
+
+   | Pengaturan | Nilai |
+   | --- | --- |
+   | Framework Preset | Vite |
+   | Build Command | `npm run build` |
+   | Output Directory | `dist` |
+   | Install Command | `npm install` |
+
+5. Klik **Deploy**. Setelah selesai, Vercel memberikan URL production.
+
+### Deploy melalui Vercel CLI
+
+Jalankan perintah berikut dari folder `frontend`:
+
+```bash
+npm install
+npm run build
+npx vercel
+```
+
+Ikuti pertanyaan CLI dan pilih folder `frontend` sebagai project directory.
+Untuk deploy production:
+
+```bash
+npx vercel --prod
+```
+
+### Catatan
+
+- Prototype saat ini menyimpan data login, favorit, riwayat, dan tema di
+  `localStorage`, sehingga data tersebut tersimpan per browser/perangkat dan
+  belum menjadi data bersama di server.
+- URL aplikasi pada katalog masih berupa URL contoh dan perlu diganti di
+  `src/App.jsx` ketika layanan backend sudah tersedia.
