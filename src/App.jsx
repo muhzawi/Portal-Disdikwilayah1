@@ -17,7 +17,9 @@ import {
   ShieldCheck,
   Star,
   X,
-} from "lucide-react";
+}
+
+from "lucide-react";
 import {
   BrowserRouter,
   Link,
@@ -27,7 +29,9 @@ import {
   useLocation,
   useNavigate,
   useParams,
-} from "react-router-dom";
+} 
+
+from "react-router-dom";
 import "./App.css";
 
 const applications = [
@@ -151,7 +155,7 @@ function Logo() {
       <span>
         Cabang Dinas Pendidikan
         <br />
-        <strong>Wilayah 1 Sumatera Utara</strong>
+        <strong>Wilayah I Sumatera Utara</strong>
       </span>
     </Link>
   );
@@ -246,7 +250,7 @@ function Landing() {
               Satu akun untuk <em>semua layanan</em> pendidikan.
             </h1>
             <p>
-              Portal terpusat Cabang Dinas Pendidikan Wilayah 1 Sumatera Utara
+              Portal terpusat Cabang Dinas Pendidikan Wilayah I Sumatera Utara
               untuk menemukan dan mengakses aplikasi kerja dengan lebih cepat.
             </p>
             <div className="hero-actions">
@@ -354,7 +358,7 @@ function Footer() {
         <div>
           <Logo />
           <p>
-            Portal terpusat Cabang Dinas Pendidikan Wilayah 1 Sumatera Utara.
+            Portal terpusat Cabang Dinas Pendidikan Wilayah I Sumatera Utara.
           </p>
         </div>
         <div>
@@ -369,7 +373,7 @@ function Footer() {
         </div>
       </div>
       <div className="container footer-bottom">
-        <span>© 2025 Cabang Dinas Pendidikan Wilayah 1 Sumatera Utara</span>
+        <span>© 2025 Cabang Dinas Pendidikan Wilayah I Sumatera Utara</span>
         <span>Portal SSO • One account, everything connected.</span>
       </div>
     </footer>
