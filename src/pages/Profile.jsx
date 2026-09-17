@@ -2,6 +2,8 @@ import { useApp } from "../context/AppContext";
 
 export default function Profile() {
   const { user } = useApp();
+  const displayName = user?.nama_lengkap || user?.name || user?.username || "Pengguna";
+  const initial = displayName.charAt(0).toUpperCase();
 
   return (
     <div className="dashboard-content">
@@ -11,11 +13,11 @@ export default function Profile() {
       </div>
 
       <div className="profile-card">
-        <div className="avatar-large">{user.name[0].toUpperCase()}</div>
+        <div className="avatar-large">{initial}</div>
         <div className="profile-info">
-          <h2>{user.name}</h2>
-          <p className="profile-email">{user.email}</p>
-          <span className="role-badge">Pegawai / Staf Dinas</span>
+          <h2>{displayName}</h2>
+          <p className="profile-email">@{user?.username || "akun-portal"}</p>
+          <span className="role-badge">{user?.role === "super_admin" ? "Super Admin" : user?.role === "admin" ? "Admin" : "Pegawai / Staf Dinas"}</span>
         </div>
       </div>
     </div>

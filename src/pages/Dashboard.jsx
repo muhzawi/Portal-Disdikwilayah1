@@ -1,34 +1,25 @@
 import { Link } from "react-router-dom";
-import { Grid2X2, ArrowRight, Star, Clock } from "lucide-react";
 import { useApp } from "../context/AppContext";
 import { applications } from "../data/applications";
 import AppCard from "../components/cards/AppCard";
+import { ArrowRight, Clock3, Sparkles, Star } from "lucide-react";
 
 export default function Dashboard() {
   const { user, favorites, recent } = useApp();
-
   const favoriteApps = applications.filter((app) => favorites.includes(app.id));
   const recentApps = recent
     .map((id) => applications.find((app) => app.id === id))
     .filter(Boolean);
 
   return (
-    <div className="dashboard-content">
-      <div className="page-header">
-        <h1>Selamat datang kembali, {user.nama_lengkap || user.username} </h1>{" "}
-        <p>Akses seluruh layanan portal pendidikan dalam satu tempat.</p>
-      </div>
-
-      <div className="dashboard-hero">
-        <div className="hero-text">
-          <span className="hero-tag">Portal Terpusat</span>
-          <h2>Semua Aplikasi Pekerjaan Anda</h2>
-          <p>
-            Temukan dan jalankan aplikasi administrasi & pendidikan lebih cepat
-            tanpa ribet.
-          </p>
+    <div className="dashboard-content dashboard-home">
+      <div className="page-header dashboard-welcome">
+        <div>
+          <span className="eyebrow"><Sparkles size={14} /> Portal terpusat</span>
+          <h1>Selamat datang kembali, {user.nama_lengkap || user.username}</h1>
+          <p>Pilih layanan yang ingin Anda akses hari ini.</p>
         </div>
-        <Grid2X2 className="hero-bg-icon" size={160} />
+        <span className="welcome-date">Semua layanan dalam satu tempat</span>
       </div>
 
       <section className="dashboard-section">
@@ -58,7 +49,7 @@ export default function Dashboard() {
       <section className="dashboard-section">
         <div className="section-title-row">
           <h2>
-            <Clock size={18} /> Baru Saja Dibuka
+            <Clock3 size={18} /> Baru Saja Dibuka
           </h2>
         </div>
 

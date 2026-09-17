@@ -21,10 +21,27 @@ export default function DashboardLayout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
   if (!user) return <Navigate to="/login" replace />;
 
   const isAdmin = user?.role === "admin" || user?.role === "super_admin";
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const query = search.trim();
+    navigate(query ? `/apps?search=${encodeURIComponent(query)}` : "/apps");
+  };
+
+  const handleLogout = () => {
+    logout();
+    setLogoutOpen(false);
+    setProfileOpen(false);
+    setOpen(false);
+    navigate("/login", { replace: true });
+  };
 
   const nav = isAdmin
     ? [
@@ -100,26 +117,66 @@ export default function DashboardLayout({ children }) {
           >
             <Menu size={21} />
           </button>
-          <div className="header-search">
+          <form className="header-search" onSubmit={handleSearch}>
             <Search size={18} />
-            <input placeholder="Cari aplikasi..." />
-          </div>
+            <input
+              aria-label="Cari aplikasi"
+              placeholder="Cari aplikasi..."
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+          </form>
           <div className="header-actions">
             <button className="icon-button" aria-label="Notifikasi">
               <Bell size={19} />
               <span className="notification-dot" />
             </button>
-            <Link className="user-chip" to="/profile">
+            <button
+              className="user-chip"
+              type="button"
+              onClick={() => setProfileOpen((value) => !value)}
+              aria-expanded={profileOpen}
+            >
               <span className="avatar">
                 {(user.nama_lengkap || user.username || "?")[0].toUpperCase()}
               </span>{" "}
               <span>{user.nama_lengkap || user.username}</span>{" "}
               <ChevronDown size={15} />
-            </Link>
+            </button>
+            {profileOpen && (
+              <div className="profile-menu">
+                <Link to="/profile" onClick={() => setProfileOpen(false)}>
+                  Profil saya
+                </Link>
+                <Link to="/settings" onClick={() => setProfileOpen(false)}>
+                  Pengaturan
+                </Link>
+                <button type="button" onClick={() => setLogoutOpen(true)}>
+                  <LogOut size={15} /> Keluar
+                </button>
+              </div>
+            )}
           </div>
         </header>
         {children}
       </div>
+      {logoutOpen && (
+        <div className="modal-backdrop" role="presentation">
+          <div className="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="logout-title">
+            <div className="modal-icon"><LogOut size={20} /></div>
+            <h2 id="logout-title">Keluar dari portal?</h2>
+            <p>Sesi Anda akan diakhiri pada perangkat ini.</p>
+            <div className="modal-actions">
+              <button className="button button-secondary" type="button" onClick={() => setLogoutOpen(false)}>
+                Tetap masuk
+              </button>
+              <button className="button button-danger" type="button" onClick={handleLogout}>
+                Ya, keluar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

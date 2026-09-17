@@ -7,6 +7,7 @@ import Logo from "../components/common/Logo";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { login } = useApp();
   const navigate = useNavigate();
 
@@ -14,10 +15,13 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   if (!username.trim() || !password.trim()) return;
 
+    setError("");
   const result = await login(username, password);
   if (result.success) {
     const isAdmin = result.user?.role === "admin" || result.user?.role === "super_admin";
     navigate(isAdmin ? "/admin/dashboard" : "/dashboard");
+    } else {
+      setError(result.message || "Login gagal. Periksa kembali data Anda.");
   }
 };
 
@@ -31,6 +35,7 @@ const handleSubmit = async (e) => {
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
+          {error && <div className="form-error" role="alert">{error}</div>}
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <div className="input-wrapper">

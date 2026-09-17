@@ -8,6 +8,8 @@ export default function Register() {
   const [namaLengkap, setNamaLengkap] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const { register } = useApp();
   const navigate = useNavigate();
 
@@ -15,9 +17,16 @@ export default function Register() {
     e.preventDefault();
     if (!namaLengkap.trim() || !username.trim() || !password.trim()) return;
 
+    setError("");
+    setSuccess("");
     const result = await register(namaLengkap, username, password);
     if (result.success) {
-      navigate("/login");
+      setSuccess("Registrasi berhasil. Akun Anda sudah dibuat dan siap digunakan.");
+      setNamaLengkap("");
+      setUsername("");
+      setPassword("");
+    } else {
+      setError(result.message || "Registrasi gagal. Periksa kembali data Anda.");
     }
   };
 
@@ -31,6 +40,8 @@ export default function Register() {
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
+          {success && <div className="form-success" role="status">{success}</div>}
+          {error && <div className="form-error" role="alert">{error}</div>}
           <div className="form-group">
             <label htmlFor="namaLengkap">Nama Lengkap</label>
             <div className="input-wrapper">

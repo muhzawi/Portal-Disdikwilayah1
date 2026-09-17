@@ -51,13 +51,11 @@ const login = async (username, password) => {
       if (data.token) localStorage.setItem("token", data.token);
       return { success: true, user: userData }; // tambah user di sini
     } else {
-      alert(data.message || "Login gagal, periksa username dan password!");
-      return { success: false };
+      return { success: false, message: data.message || "Login gagal, periksa username dan password!" };
     }
   } catch (error) {
     console.error("Error login:", error);
-    alert("Gagal terhubung ke server backend!");
-    return { success: false };
+    return { success: false, message: "Gagal terhubung ke server backend!" };
   }
 };
 
@@ -75,13 +73,11 @@ const login = async (username, password) => {
       });
       const data = await res.json();
       if (!res.ok) {
-        alert(data.message || "Registrasi gagal!");
         return { success: false, message: data.message };
       }
       return { success: true };
     } catch (err) {
       console.error("Error register:", err);
-      alert("Gagal terhubung ke server backend!");
       return { success: false, message: "Terjadi kesalahan koneksi." };
     }
   };
@@ -90,6 +86,7 @@ const login = async (username, password) => {
     setUser(null);
     localStorage.removeItem("portal_user");
     localStorage.removeItem("token");
+    return { success: true };
   };
 
   const toggleFavorite = (id) => {
